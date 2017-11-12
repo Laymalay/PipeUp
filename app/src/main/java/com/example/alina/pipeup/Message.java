@@ -2,6 +2,7 @@ package com.example.alina.pipeup;
 
 import android.provider.ContactsContract;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -13,6 +14,8 @@ public class Message {
     private Contact receiver;
     private Date date;
     private String text;
+    SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy, hh:mm aaa");
+
 
     public Message(Contact sender,Contact receiver, java.util.Date date, String text){
         this.sender=sender;
@@ -23,9 +26,12 @@ public class Message {
 
 
     public String getDate() {
-        return date.toString();
+        return sdf.format(date);
     }
 
+    public Date getFormatDate() {
+        return date;
+    }
     public void setDate(Date date) {
         this.date = date;
     }

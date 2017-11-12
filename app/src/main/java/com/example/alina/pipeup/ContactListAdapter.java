@@ -47,7 +47,6 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
         nameView.setText(contact.getName());
         surnameView.setText(contact.getSurname());
         emailView.setText(contact.getEmail());
-        Log.d("sf",contact.getAva()+"");
         avaView.setImageResource(contact.getAva());
 
         return view;

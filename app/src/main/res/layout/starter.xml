@@ -9,11 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:layout_margin="30dp"
         android:inputType="textEmailAddress" />
 
-    <Button
+
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/btnStart"
+        android:layout_gravity="center"
         android:layout_width="205dp"
         android:layout_height="wrap_content"
-        android:text="start"></Button>
+        android:text="start"
+        android:textStyle="bold"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/white" />
+
 </LinearLayout>
