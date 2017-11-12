@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ public class ContactList extends AppCompatActivity {
 
     private List<Contact> contacts = new ArrayList();
     SharedPreferences mSettings;
+    ContactListAdapter contactListAdapter;
 
     ListView contactList;
     @Override
@@ -32,7 +34,7 @@ public class ContactList extends AppCompatActivity {
         mSettings = getSharedPreferences(Starter.APP_PREFERENCES, Context.MODE_PRIVATE);
         setInitialData();
         contactList = (ListView) findViewById(R.id.contactList);
-        ContactListAdapter contactListAdapter = new ContactListAdapter(this, R.layout.contact_item, contacts);
+        contactListAdapter = new ContactListAdapter(this, R.layout.contact_item, contacts);
         contactList.setAdapter(contactListAdapter);
         contactList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,6 +67,22 @@ public class ContactList extends AppCompatActivity {
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+    public void UpdateList(Contact recent_contact){
+        for(int i=this.contacts.indexOf(recent_contact);i>0;){
+            contacts.set(i,contacts.get(--i));
+            Log.d("--------------------","==============");
+            for (int j=0;j<contacts.size();j++){
+                Log.d("dsf",contacts.get(j).getName());
+            }
+        }
+        this.contacts.set(0,recent_contact);
+        Log.d("--------------------","======================");
+        for (int j=0;j<contacts.size();j++){
+            Log.d("dsf",contacts.get(j).getName());
+        }
+        contactListAdapter = new ContactListAdapter(this, R.layout.contact_item, contacts);
+        contactList.setAdapter(contactListAdapter);
     }
 
     private void showContact(long id) {

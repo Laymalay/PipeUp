@@ -25,10 +25,12 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
     public static final String APP_PREFERENCES_USER = "userEmail";
     SharedPreferences mSettings;
     Button btnStart;
+
     public static List<Contact> users = new ArrayList();
     Contact alina = new Contact ("Alina", "Zhukouskaya","alina@gmail.com", ((R.drawable.alina)));
     Contact gogi = new Contact ("Gogi", "Shap","gogi@gmail.com", (R.drawable.gogi));
     Contact nika = new Contact("Nika", "Zhukouskaya","nika@gmail.com", (R.drawable.nika));
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

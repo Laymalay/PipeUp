@@ -71,6 +71,7 @@ public class ShowContactFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_back:
+                ((ContactList)getActivity()).UpdateList(this.contacts.get(this.pos));
                 getActivity().getFragmentManager().beginTransaction().remove(this).commit();
                 break;
             case R.id.button_next:
