@@ -40,4 +40,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Service" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btnCleanDB"
+        android:layout_gravity="center"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:text="clean DB"
+        android:textStyle="bold"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/white" />
 </LinearLayout>

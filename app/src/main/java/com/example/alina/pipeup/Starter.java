@@ -2,9 +2,12 @@ package com.example.alina.pipeup;
 
 
 import android.app.NotificationManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -34,7 +37,7 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
     public static final String APP_PREFERENCES = "PipeUpSettings";
     public static final String APP_PREFERENCES_USER = "userEmail";
     SharedPreferences mSettings;
-    Button btnStart, btnStartService;
+    Button btnStart, btnStartService, btnCleanDB;
     public static boolean isService = false;
 
     private float x1,x2;
@@ -47,12 +50,13 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
     NotificationManager mNotificationManager;
     MediaPlayer mp;
     NotificationCompat.Builder mBuilder;
-
+    public static DBHelper dbHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbHelper = new DBHelper(this);
         setContentView(R.layout.starter);
         setInitialData();
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
@@ -62,6 +66,10 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
 
         btnStartService = (Button) findViewById(R.id.btnStartService);
         btnStartService.setOnClickListener(this);
+
+        btnCleanDB = (Button) findViewById(R.id.btnCleanDB);
+        btnCleanDB.setOnClickListener(this);
+
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
             .setVibrate(new long[]{0, 100, 100, 100, 100, 100})
@@ -80,6 +88,16 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
         Log.d("asa",  v.getId()+"");
         mNotificationManager.notify(mNotificationId, mBuilder.build());
         switch (v.getId()) {
+            case R.id.btnCleanDB:
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                Log.d("DATABASE", "--- Clear mytable: ---");
+                // удаляем все записи
+                int clearCount1 = db.delete("users", null, null);
+                Log.d("DATABASE", "deleted rows count = " + clearCount1);
+                int clearCount2 = db.delete("messages", null, null);
+                Log.d("DATABASE", "deleted rows count = " + clearCount2);
+                dbHelper.close();
+                break;
             case R.id.btnStartService:
                 mp.start();
                 Log.d("asa","Serviceee");
@@ -108,20 +126,118 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void setInitialData() {
+        Log.d("DADADA", dbHelper.toString());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues user1 = new ContentValues();
+        user1.put("name", alina.getName());
+        user1.put("email", alina.getEmail());
+        user1.put("surname", alina.getSurname());
+        long rowID1 = db.insert("users", null, user1);
+        Log.d("DATABASE", "row inserted, ID = " + rowID1);
+
+        ContentValues user2 = new ContentValues();
+        user2.put("name", gogi.getName());
+        user2.put("email", gogi.getEmail());
+        user2.put("surname", gogi.getSurname());
+        long rowID2 = db.insert("users", null, user2);
+        Log.d("DATABASE", "row inserted, ID = " + rowID2);
+
+        ContentValues user3 = new ContentValues();
+        user3.put("name", nika.getName());
+        user3.put("email", nika.getEmail());
+        user3.put("surname", nika.getSurname());
+        long rowID3 = db.insert("users", null, user3);
+        Log.d("DATABASE", "row inserted, ID = " + rowID3);
 
         Message msg1 = new Message(alina, gogi, new Date(), "hi");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         Message msg2 = new Message(gogi, alina, new Date(), "Hi,how are you?");
+
+
         alina.messages.add(msg1);
         gogi.messages.add(msg2);
         users.add(alina);
         users.add(gogi);
         users.add(nika);
 
+        ContentValues message1 = new ContentValues();
+        message1.put("sender", msg1.getSender().getEmail());
+        message1.put("receiver", msg1.getReceiver().getEmail());
+        message1.put("txt", msg1.getText());
+        message1.put("date", msg1.getDate());
+        long messages_rowID1 = db.insert("messages", null, message1);
+        Log.d("DATABASE", "row inserted, ID = " + messages_rowID1);
+
+        ContentValues message2 = new ContentValues();
+        message2.put("sender", msg2.getSender().getEmail());
+        message2.put("receiver", msg2.getReceiver().getEmail());
+        message2.put("txt", msg2.getText());
+        message2.put("date", msg2.getDate());
+        long messages_rowID2 = db.insert("messages", null, message2);
+        Log.d("DATABASE", "row inserted, ID = " + messages_rowID2);
+
+
+
+
+
+        Log.d("DATABASE", "--- Rows in users: ---");
+        // делаем запрос всех данных из таблицы mytable, получаем Cursor
+        Cursor c = db.query("users", null, null, null, null, null, null);
+
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        if (c.moveToFirst()) {
+
+            // определяем номера столбцов по имени в выборке
+            int idColIndex = c.getColumnIndex("id");
+            int nameColIndex = c.getColumnIndex("name");
+            int emailColIndex = c.getColumnIndex("email");
+            int surnameColIndex = c.getColumnIndex("surname");
+
+            do {
+                // получаем значения по номерам столбцов и пишем все в лог
+                Log.d("DATABASE",
+                        "ID = " + c.getInt(idColIndex) +
+                                ", name = " + c.getString(nameColIndex) +
+                                ", surname = " + c.getString(surnameColIndex) +
+                                ", email = " + c.getString(emailColIndex));
+                // переход на следующую строку
+                // а если следующей нет (текущая - последняя), то false - выходим из цикла
+            } while (c.moveToNext());
+        } else
+            Log.d("DATABASE", "0 rows");
+        c.close();
+
+
+        Log.d("DATABASE", "--- Rows in messages: ---");
+        // делаем запрос всех данных из таблицы mytable, получаем Cursor
+        Cursor m = db.query("messages", null, null, null, null, null, null);
+
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        if (m.moveToFirst()) {
+
+            // определяем номера столбцов по имени в выборке
+            int idColIndex = m.getColumnIndex("id");
+            int textColIndex = m.getColumnIndex("txt");
+            int dateColIndex = m.getColumnIndex("date");
+            int senderColIndex = m.getColumnIndex("sender");
+            int receiverColIndex = m.getColumnIndex("receiver");
+
+            do {
+                // получаем значения по номерам столбцов и пишем все в лог
+                Log.d("DATABASE",
+                        "ID = " + m.getInt(idColIndex) +
+                                ", txt = " + m.getString(textColIndex) +
+                                ", sender = " + m.getString(senderColIndex) +
+                                ", date = " + m.getString(dateColIndex) +
+                                ", receiver = " + m.getString(receiverColIndex));
+                // переход на следующую строку
+                // а если следующей нет (текущая - последняя), то false - выходим из цикла
+            } while (m.moveToNext());
+        } else
+            Log.d("DATABASE", "0 rows");
+        m.close();
 
     }
 
