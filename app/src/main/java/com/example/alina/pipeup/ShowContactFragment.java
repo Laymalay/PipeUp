@@ -6,8 +6,10 @@ import android.app.FragmentTransaction;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,13 +57,15 @@ public class ShowContactFragment extends Fragment implements View.OnClickListene
 
         TextView emailView = (TextView) view.findViewById(R.id.email);
 
-        ImageView avaView = (ImageView) view.findViewById(R.id.ava);
+        //ImageView avaView = (ImageView) view.findViewById(R.id.ava);
+
+        MultiPointTouchListener img = (MultiPointTouchListener) view.findViewById(R.id.ava);
 
         nameView.setText(contact.getName());
         surnameView.setText(contact.getSurname());
         emailView.setText(contact.getEmail());
-        avaView.setImageResource(contact.getAva());
-
+        //avaView.setImageResource(contact.getAva());
+        img.setImageResource(contact.getAva());
         return view;
     }
 

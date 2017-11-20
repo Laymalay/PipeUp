@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PipeUp</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="channel">channel</string>
+    <string name="name_channel">name_channel</string>
+    <string name="local_service_started">local_service_started</string>
+
 </resources>

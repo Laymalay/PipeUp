@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -47,7 +49,9 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
         nameView.setText(contact.getName());
         surnameView.setText(contact.getSurname());
         emailView.setText(contact.getEmail());
-        avaView.setImageResource(contact.getAva());
+        //avaView.setImageResource(contact.getAva());
+        Picasso.with(this.getContext()).load("https://i.imgur.com/tGbaZCY.jpg").fit().into(avaView);
+
 
         return view;
     }
