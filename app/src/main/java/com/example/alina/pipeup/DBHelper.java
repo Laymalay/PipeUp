@@ -13,7 +13,7 @@ class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
         // конструктор суперкласса
-        super(context, "myDB", null, 1);
+        super(context, "myDB2", null, 1);
     }
 
     @Override
@@ -24,6 +24,7 @@ class DBHelper extends SQLiteOpenHelper {
                 + "id integer primary key autoincrement,"
                 + "name text,"
                 + "surname text,"
+                + "imagelink text,"
                 + "email text" + ");");
         db.execSQL("create table messages ("
                 + "id integer primary key autoincrement,"

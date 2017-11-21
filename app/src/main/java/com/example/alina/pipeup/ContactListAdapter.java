@@ -50,7 +50,7 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
         surnameView.setText(contact.getSurname());
         emailView.setText(contact.getEmail());
         //avaView.setImageResource(contact.getAva());
-        Picasso.with(this.getContext()).load("https://i.imgur.com/tGbaZCY.jpg").fit().into(avaView);
+        Picasso.with(this.getContext()).load(contact.getAva_link()).fit().into(avaView);
 
 
         return view;

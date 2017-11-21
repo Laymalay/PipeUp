@@ -13,14 +13,16 @@ public class Contact {
     private  String email;
     public List<Message> messages;
     private int ava;
+    private String ava_link;
 
-    public Contact(String name, String surname,String email, int ava){
+    public Contact(String name, String surname,String email, int ava, String link){
 
         this.name=name;
         this.surname=surname;
         this.email=email;
         this.ava=ava;
         this.messages= new ArrayList<>();
+        this.ava_link=link;
     }
 
     public String getName() {
@@ -55,4 +57,11 @@ public class Contact {
         this.email = email;
     }
 
+    public String getAva_link() {
+        return ava_link;
+    }
+
+    public void setAva_link(String ava_link) {
+        this.ava_link = ava_link;
+    }
 }

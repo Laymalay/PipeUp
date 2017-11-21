@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -65,7 +67,8 @@ public class ShowContactFragment extends Fragment implements View.OnClickListene
         surnameView.setText(contact.getSurname());
         emailView.setText(contact.getEmail());
         //avaView.setImageResource(contact.getAva());
-        img.setImageResource(contact.getAva());
+        Picasso.with(this.getContext()).load(contact.getAva_link()).fit().into(img);
+        //img.setImageResource(contact.getAva());
         return view;
     }
 
@@ -105,7 +108,7 @@ public class ShowContactFragment extends Fragment implements View.OnClickListene
         ((TextView)(this.view.findViewById(R.id.name))).setText(contact.getName());
         ((TextView)(this.view.findViewById(R.id.surname))).setText(contact.getSurname());
         ((TextView)(this.view.findViewById(R.id.email))).setText(contact.getEmail());
-        ((ImageView)(this.view.findViewById(R.id.ava))).setImageResource(contact.getAva());
+        Picasso.with(this.getContext()).load(contact.getAva_link()).fit().into((ImageView)(this.view.findViewById(R.id.ava)));
     }
 }
 

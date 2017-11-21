@@ -112,6 +112,7 @@ public class ContactList extends AppCompatActivity {
         contacts.addAll(Starter.users);
     }
     private void editContact(long id){
+
     }
     private void deleteContact(long id) {
         Contact selectedContact = (Contact) contacts.get(((int) id));

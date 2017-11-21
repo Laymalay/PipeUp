@@ -44,9 +44,20 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
     static final int MIN_DISTANCE = 150;
 
     public static List<Contact> users = new ArrayList();
-    Contact alina = new Contact("Alina", "Zhukouskaya", "alina@gmail.com", ((R.drawable.alina)));
-    Contact gogi = new Contact("Gogi", "Shap", "gogi@gmail.com", (R.drawable.gogi));
-    Contact nika = new Contact("Nika", "Zhukouskaya", "nika@gmail.com", (R.drawable.nika));
+    Contact alina = new Contact("Alina",
+                                "Zhukouskaya",
+                                "alina@gmail.com", ((R.drawable.alina)),
+                                "https://dl.dropboxusercontent.com/s/llcc1a3l8yzzpzi/alina%40gmail.com.jpg");
+
+    Contact gogi = new Contact("Gogi",
+                               "Shap",
+                               "gogi@gmail.com", (R.drawable.gogi),
+                               "https://dl.dropboxusercontent.com/s/e9fcs8h652fatpx/gogi%40gmail.com.jpg");
+
+    Contact nika = new Contact("Nika",
+                               "Zhukouskaya",
+                               "nika@gmail.com", (R.drawable.nika),
+                               "https://dl.dropboxusercontent.com/s/2ptved6rzfk0xxu/nika%40gmail.com.jpg");
     NotificationManager mNotificationManager;
     MediaPlayer mp;
     NotificationCompat.Builder mBuilder;
@@ -133,6 +144,7 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
         user1.put("name", alina.getName());
         user1.put("email", alina.getEmail());
         user1.put("surname", alina.getSurname());
+        user1.put("imagelink",alina.getAva_link());
         long rowID1 = db.insert("users", null, user1);
         Log.d("DATABASE", "row inserted, ID = " + rowID1);
 
@@ -140,6 +152,7 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
         user2.put("name", gogi.getName());
         user2.put("email", gogi.getEmail());
         user2.put("surname", gogi.getSurname());
+        user2.put("imagelink",gogi.getAva_link());
         long rowID2 = db.insert("users", null, user2);
         Log.d("DATABASE", "row inserted, ID = " + rowID2);
 
@@ -147,6 +160,7 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
         user3.put("name", nika.getName());
         user3.put("email", nika.getEmail());
         user3.put("surname", nika.getSurname());
+        user3.put("imagelink",nika.getAva_link());
         long rowID3 = db.insert("users", null, user3);
         Log.d("DATABASE", "row inserted, ID = " + rowID3);
 
@@ -193,6 +207,7 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
             int nameColIndex = c.getColumnIndex("name");
             int emailColIndex = c.getColumnIndex("email");
             int surnameColIndex = c.getColumnIndex("surname");
+            int avaColIndex = c.getColumnIndex("imagelink");
 
             do {
                 // получаем значения по номерам столбцов и пишем все в лог
@@ -200,6 +215,7 @@ public class Starter extends AppCompatActivity implements View.OnClickListener {
                         "ID = " + c.getInt(idColIndex) +
                                 ", name = " + c.getString(nameColIndex) +
                                 ", surname = " + c.getString(surnameColIndex) +
+                                ", imageLink = " + c.getString(avaColIndex) +
                                 ", email = " + c.getString(emailColIndex));
                 // переход на следующую строку
                 // а если следующей нет (текущая - последняя), то false - выходим из цикла

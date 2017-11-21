@@ -61,7 +61,7 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_prev"
-            android:layout_width="68dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:backgroundTint="@color/white"
@@ -70,7 +70,7 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_back"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:backgroundTint="@color/white"
@@ -79,7 +79,7 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_next"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:backgroundTint="@color/white"

@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -44,7 +46,8 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         nameView.setText(message.getSender().getName());
         dateView.setText(message.getDate());
         textView.setText(message.getText());
-        avaView.setImageResource(message.getSender().getAva());
+        Picasso.with(this.getContext()).load(message.getSender().getAva_link()).fit().into(avaView);
+        //avaView.setImageResource(message.getSender().getAva());
         return view;
     }
 }
