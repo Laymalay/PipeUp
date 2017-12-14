@@ -38,7 +38,7 @@ public class BackgroundService extends Service {
     public void onCreate() {
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
-        newtext = "BackGroundApp Service Running";
+        newtext = "BackGround Service Running";
 
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(BackgroundService.this)
